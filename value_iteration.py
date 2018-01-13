@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def run_value_iteration(mdp, gamma=0.95, eps=0.1, keep_history=False, iter_max=500):
+def run_value_iteration(mdp, eps=0.1, keep_history=False, iter_max=500):
     """ Value iteration of a MDP to find the optimal policy and its evaluation V
         keep_history -> to keep the convergence history and plot it"""
     n = mdp.nb_s
@@ -22,7 +22,7 @@ def run_value_iteration(mdp, gamma=0.95, eps=0.1, keep_history=False, iter_max=5
             for action in range(a):
                 esp = [V_prec[y] * mdp.transition[state, action, y]
                        for y in range(n)]
-                Z[action] = mdp.rewards[state, action] + gamma * sum(esp)
+                Z[action] = mdp.rewards[state, action] + mdp.gamma * sum(esp)
             V[state] = np.max(Z)
             pi[state] = np.argmax(Z)
             
