@@ -19,7 +19,7 @@ class DMDP:
     def step(self, state, action):
         next_state = np.random.choice(self.nb_s, 1, p=self.transition[state, action, :])
         reward = self.rewards[state, action]
-        return next_state, reward
+        return next_state[0], reward
 
 
 def create_random_DMDP(nb_a, nb_s, reward_func, gamma=0.95):
@@ -33,4 +33,4 @@ def create_random_DMDP(nb_a, nb_s, reward_func, gamma=0.95):
         for s in range(nb_s):
             P[s, a, :] /= np.sum(P[s, a, :])
 
-    return DMDP(nb_a, nb_s, R, P, gamma=0.95)
+    return DMDP(nb_a, nb_s, R, P, gamma)
