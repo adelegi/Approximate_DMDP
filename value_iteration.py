@@ -31,8 +31,8 @@ def run_value_iteration(mdp, eps=0.1, keep_history=False, iter_max=500):
     
     if nb_iter == iter_max:
         print('NO CONVERGENCE in {} iterations'.format(iter_max))
-    else:
-        print("Convergence in {} iterations, precision of {}".format(nb_iter, eps))
+    #else:
+    #    print("Convergence in {} iterations, precision of {}".format(nb_iter, eps))
     if keep_history:
         return pi, V, V_hist
     else:
