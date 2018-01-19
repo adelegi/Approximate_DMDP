@@ -53,8 +53,8 @@ def sublinear_random_mon_VI(mdp, eps, delta, analyze=False):
     T = 1. / (1 - mdp.gamma) * math.log(4. / (1 - mdp.gamma))
     T = int(T) + 1
 
-    v0 = np.zeros((mdp.nb_s, 1))
-    pi0 = np.zeros((mdp.nb_a, 1))
+    v_k = np.zeros((mdp.nb_s, 1))
+    pi_k = np.zeros((mdp.nb_a, 1))
     eps_k = mdp.M / (1 - mdp.gamma)
 
     if analyze:
@@ -66,7 +66,7 @@ def sublinear_random_mon_VI(mdp, eps, delta, analyze=False):
         analysis['V_hist'] = []
         analysis['pi_hist'] = []
 
-    for k in range(K):
+    for k in tqdm(range(K)):
         eps_k = 0.5 * eps_k
         v_k, pi_k, m_hist = sample_randomize_mon_VI(mdp, v_k, pi_k, T,
             (1 - mdp.gamma)*eps/(4*mdp.gamma), delta/K, analyze)
