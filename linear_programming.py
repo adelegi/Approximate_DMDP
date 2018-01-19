@@ -35,7 +35,7 @@ def LP_solving_DMDP(mdp):
     A, r = LP_param_DMDP(mdp)
 
     # Instantiate our problem class
-    model = pulp.LpProblem("LP maximising problem", pulp.LpMinimize)
+    model = pulp.LpProblem("LP minimizing problem", pulp.LpMinimize)
 
     # Variable
     v = pulp.LpVariable.dicts("Value Function",
@@ -66,4 +66,4 @@ def LP_solving_DMDP(mdp):
                   for action in range(mdp.nb_a)]
         pi[state, 0] = np.argmax(values)
 
-    return v_final, pi
+    return np.array(v_final), np.array(pi)

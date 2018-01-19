@@ -19,7 +19,7 @@ def sampled_randomized_VI(mdp, v0, L, eps, delta, analyze=False):
     for i in range(mdp.nb_s):
         for a in range(mdp.nb_a):
             x[i, a] = apx_trans(mdp, v0, np.max(v0), i, a, eps, delta)
-
+            
     v_prev = v0.copy()
     for l in range(L):
         v_l, pi_l = apx_val(mdp, v_prev, v0, x, eps, delta / L)
