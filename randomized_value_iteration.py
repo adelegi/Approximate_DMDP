@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 
 def apx_trans(mdp, u, M, i, a, eps, delta):
@@ -45,18 +46,26 @@ def apx_val(mdp, u, v0, x, eps, delta):
 def randomizedVI(mdp, v0, L, eps, delta, analyze=False):
     m_hist = []
 
+    start_time_x = time.time()
     x = np.zeros((mdp.nb_s, mdp.nb_a))
     for i in range(mdp.nb_s):
         x[i, :] = [mdp.transition[i, a, :].dot(v0) for a in range(mdp.nb_a)]
 
+    if analyze:
+        print("{} sec to compute x=p^Tv".format(round(time.time() - start_time_x,4)))
+
     v_prev = v0.copy()
     for l in range(L):
+        start_time_l = time.time()
         v_l, pi_l = apx_val(mdp, v_prev, v0, x, eps, delta / L)
         v_prev = v_l
 
         if analyze:
+            duration_l = time.time() - start_time_l
             m = int(2 * np.max(np.abs(v_prev - v0))**2 / (eps**2) \
                 * np.log(2 / delta)) + 1
-            m_hist.append(m)
+            print("Iteration l={}, |S||A|*{} iterations of ApxTrans in {} sec".format(
+                l, m, round(duration_l,4)))
+            m_hist.append([m, duration_l])
 
-    return v_l, pi_l, m_hist
+    return v_l, pi_l, np.arrray(m_hist)
