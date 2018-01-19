@@ -1,11 +1,15 @@
 import numpy as np 
 import time
 import math
+import pickle
 
 ### create mdp
 
 from DMDP_class import DMDP, create_random_DMDP
-from tools import save_obj, load_obj
+
+def save_obj(obj, name):
+    with open(name + '.pkl', 'wb') as f:
+        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
 reward_func = lambda s, a: np.random.random()
 nb_a = 2
